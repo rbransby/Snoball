@@ -1,0 +1,30 @@
+{
+  "name": "Snoball",
+  "description": "Snoball app",
+  "main": "",
+  "authors": [
+    "Rob Bransby"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.2.0",
+    "paper-item": "PolymerElements/paper-item#~1.0.7",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#~1.0.5",
+    "iron-icons": "PolymerElements/iron-icons#~1.0.4",
+    "paper-input": "PolymerElements/paper-input#~1.0.18"
+  }
+}

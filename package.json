@@ -1,0 +1,17 @@
+{
+  "name": "snoball-app",
+  "version": "0.0.1",
+  "description": "Snoball app",
+  "main": "index.html",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mathjs": "^2.4.1",
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.3",
+    "browser-sync": "^2.10.0",
+    "gulp": "^3.9.0"
+  }
+}

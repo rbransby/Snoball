@@ -1,0 +1,21 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="snoball-event-collection">
+  <template>
+    <style>
+      snoball-event-display {
+        height: 80px;
+        width: 100%;
+        display: inline-block;
+      }
+    </style>
+    <template is="dom-repeat" items="{{items}}">
+      <snoball-event-display item="{{item}}"></snoball-event-display>
+    </template>
+  </template>
+  <script src="snoball-event-collection.js"></script>
+  <script>
+    "use strict";
+    Polymer(SnoballEventCollection);
+  </script>
+</dom-module>
