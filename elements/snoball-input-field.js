@@ -22,6 +22,8 @@
               console.log('enter pressed');
               // work out what we want to fire based on the text, and then fire it.
               this.fire('snoball-command-received', {eventType: 'snoball-chat', payload:'new chat message'});
+              this.fire('snoball-command-received', {eventType: 'snoball-join-game', payload:'username'});
+              this.fire('snoball-command-received', {eventType: 'snoball-game-request', payload:{bigs:2,smalls:4}});
               this.fire('snoball-command-received', {eventType: 'snoball-game-solution', payload:'10*5'});
           }
       }
