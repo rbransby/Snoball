@@ -3,8 +3,8 @@
       beforeRegister() {
         this.is = 'snoball-input-field';
         this.properties = {
-          item: {
-            type: Object,
+          inputText: {
+            type: String,
             value: {}
           }
         };
@@ -18,13 +18,27 @@
       attributeChanged() {}
       
       checkIfEnterPressed(e) {
-          if (e.keyCode == 13) {              
-              console.log('enter pressed');
-              // work out what we want to fire based on the text, and then fire it.
-              this.fire('snoball-command-received', {eventType: 'snoball-chat', payload:'new chat message'});
-              this.fire('snoball-command-received', {eventType: 'snoball-join-game', payload:'username'});
-              this.fire('snoball-command-received', {eventType: 'snoball-game-request', payload:{bigs:2,smalls:4}});
-              this.fire('snoball-command-received', {eventType: 'snoball-game-solution', payload:'10*5'});
+          if (e.keyCode == 13) {    
+              let input = this.inputText;
+              let event = {};
+              // new game request
+              if (input.startsWith("N:")) {
+                  input = input.replace("N:", "");
+                  var values = input.split(",");
+                  event = {eventType: 'snoball-game-request', payload: { bigs: +values[0], smalls: +values[1] } };                  
+              }
+              else if (input.startsWith("S:")) {
+                  input = input.replace("S:", "");
+                  event = {eventType: 'snoball-game-solution', payload: input};
+              }
+              else if (input.startsWith("J:")) {
+                  input = input.replace("J:", "");
+                  event = {eventType: 'snoball-join-game', payload: input};
+              }
+              else {
+                  event = {eventType: 'snoball-chat', payload: input};
+              }                        
+              this.fire('snoball-command-received', event);
           }
       }
     }
