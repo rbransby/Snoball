@@ -5,7 +5,7 @@
         this.properties = {
           inputText: {
             type: String,
-            value: {}
+            value: ''
           }
         };
       }

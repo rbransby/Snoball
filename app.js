@@ -1,5 +1,6 @@
 "use strict";
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var SnoballGame = require('./SnoballGame');
@@ -10,9 +11,7 @@ var gameInProgress = false;
 var playerSolutions = [];
 var players = [];
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
+app.use('/', express.static(__dirname));
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
@@ -65,7 +64,11 @@ io.on('connection', function(socket){
       console.log(`Solution received: ${solution}`);
       playerSolutions.push({playerName: socket.playerName, solution: solution});
       socket.emit('snoball-solution-received', {playerName: socket.playerName});
-      gameInProgress = false;
+      checkIfGameComplete();
     }
   });
+  
+  function checkIfGameComplete() {
+    
+  };
 });

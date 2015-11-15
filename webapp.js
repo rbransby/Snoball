@@ -1,6 +1,24 @@
 (function(document) {
   'use strict';
   var socket = io();
+  
+  socket.on('snoball-chat', (msg) => {
+    
+  });
+  
+  socket.on('snoball-player-joined', (playerName) => {
+    
+  });
+  
+  socket.on('snoball-new-game', (snoballGame) => {
+    
+  });
+  
+  //solution = {playerName : 'playerName'}
+  socket.on('snoball-solution-received', (solution) => {
+    
+  });
+  
   var app = document.querySelector('#webapp');
   app.addEventListener('dom-change', function() {	 
     console.log('dom change fired');     
