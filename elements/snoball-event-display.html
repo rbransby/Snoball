@@ -18,44 +18,9 @@
       </paper-item-body>
     </paper-icon-item>
   </template>
-
-  <script>
-    "use strict";
-    class SnoballEventDisplay {
-      beforeRegister() {
-        this.is = 'snoball-event-display';
-        this.properties = {
-          item: {
-            type: Object,
-            value: {}
-          }
-        };
-      }
-      created() {}
-      ready() {
-              
-      }
-      attached() {}
-      detached() {}
-      attributeChanged() {}
-
-      calculateSecondaryDisplay(item) {
-        if (item != null)
-        {
-          // if it's a chat message, just display the payload text
-          if (item.eventType == 'snoball-chat')
-          {
-            return item.payload;
-          }
-          else if (item.eventType == 'snoball-new-game')
-          {
-            return `Numbers: ${item.payload.Numbers} Target: ${item.payload.Target}`;
-          }
-        }
-      }
-      
-    }
-    
+  <script src="snoball-event-display.js"></script>
+  <script>   
+    "use strict"; 
     Polymer(SnoballEventDisplay);
   </script>
 </dom-module>
