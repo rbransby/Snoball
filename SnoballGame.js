@@ -8,7 +8,7 @@ class SnoballGame
 	{
 		if (big+small != 6)
 		{
-			throw "Must request exactly 6 numbers in total";
+			throw new Error("Must request exactly 6 numbers in total");
 		}
 		
 		this.Bigs = big;
@@ -18,7 +18,7 @@ class SnoballGame
 	}
 	
 	calculateNumbers(bigs, smalls) {
-		let possibleBigs = [100,50,25];
+		let possibleBigs = [100,75,50,25];
 		let possibleSmalls = [1,2,3,4,5,6,7,8,9,10];
 		let numbers = [];
 		
@@ -41,8 +41,12 @@ class SnoballGame
 		var numbersUsed = solution.match( numberPattern );
 		if (numbersUsed == null || numbersUsed.length == 0 || numbersUsed.length > 6)
 		{
+			//console.log(`not enough numbers or too many numbers: ${numbersUsed}`);
 			return false;
 		}
+		
+		// convert the array of stringified digits to ints
+		numbersUsed = numbersUsed.map((item) => {return +item;})
 		
 		let gameNumbers = this.Numbers.slice(0);
 		
@@ -54,6 +58,7 @@ class SnoballGame
 			}
 			else
 			{
+				//console.log(`invalid number found ${numberUsed}`)
 				isValidNumbers = false;
 				return;
 			}
@@ -61,6 +66,7 @@ class SnoballGame
 		
 		if (!isValidNumbers)
 		{
+			//console.log("isValidNumbers == false");
 			return false;
 		}
 		
