@@ -34,7 +34,28 @@ class SnoballGame
 		
 		return numbers;
 	}
+
+	// calculates the players score for the given target and solution
+	// returns: {isValid: true, solution: '10*10', explanation:'', score: 10}
+	calculateScore(solution) {
+		let validatedSolution = this.isValidSolution(solution);
+		if (validatedSolution.isValid)
+		{
+			let calculatedResult = math.eval(solution);
+			let score = 10 - Math.abs(this.Target - calculatedResult);
+			if (score < 0)
+			{
+				score = 0;
+			}
+			return {isValid: true, solution: solution, explanation:'', score:score};
+		}
+		else
+		{
+			return {isValid: false, solution: solution, explanation: validatedSolution.reason, score:0};
+		}
+	}
 	
+	// returns: {isValid: true, reason: ''}
 	isValidSolution(solution)
 	{
 		var numberPattern = /\d+/g;
@@ -42,7 +63,7 @@ class SnoballGame
 		if (numbersUsed == null || numbersUsed.length == 0 || numbersUsed.length > 6)
 		{
 			//console.log(`not enough numbers or too many numbers: ${numbersUsed}`);
-			return false;
+			return {isValid: false, reason: 'No numbers or too many numbers in solution'};
 		}
 		
 		// convert the array of stringified digits to ints
@@ -67,7 +88,7 @@ class SnoballGame
 		if (!isValidNumbers)
 		{
 			//console.log("isValidNumbers == false");
-			return false;
+			return {isValid: false, reason: 'Invalid number used in solution'};
 		}
 		
 		try {
@@ -75,10 +96,16 @@ class SnoballGame
 		}
 		catch (exception) {
 			console.log(exception.message);
-			return false;
+			return {isValid: false, reason: 'Invalid mathematical syntax was used'};
 		}
 		
-		return true;
+		return {isValid: true, reason: ''};
+	}
+	
+	// returns: 
+	completeGame(playerSolutions)
+	{
+		
 	}
 }
 

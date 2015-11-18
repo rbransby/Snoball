@@ -36,8 +36,7 @@ class SnoballEventDisplay {
         return item.payload;
       }
       else if (item.eventType == 'snoball-game-complete') {
-        //payload: {solutions: [{playerName: 'playerName', solution: 'solution', score: 00}], 
-        // winningPlayerName: 'playerName}
+        //[{playerName: 'playerName', solution: {isValid: true, solution: '10*10', explanation:'', score: 10}}]
       }
     }
   }

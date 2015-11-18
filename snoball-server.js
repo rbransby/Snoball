@@ -55,8 +55,17 @@ io.on('connection', function(socket){
   
   // a new player wants to join, record it
   socket.on('snoball-join-game', (playerName) => {
-    socket.playerName = playerName;
-    io.emit('snoball-player-joined', playerName);
+    // check for duplicates, if there is one fire: "Player name taken, please choose another."
+    if (players.indexOf(playerName) > -1)
+    {
+      socket.emit('snoball-error', "Player name taken, please choose another.");
+    }
+    else
+    {
+      socket.playerName = playerName;
+      players.push(playerName);
+      io.emit('snoball-player-joined', playerName);  
+    }    
   });
   
   // request the new game, supplying parameters
@@ -90,7 +99,8 @@ io.on('connection', function(socket){
   });
   
   function checkIfGameComplete() {
-    
+    //payload: {solutions: [{playerName: 'playerName', solution: 'solution', score: 00}], 
+    // winningPlayerName: 'playerName}
   };
   
   // reset server

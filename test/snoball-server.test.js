@@ -167,33 +167,315 @@ describe('Snoball Server @integ', () => {
   });
   
   // Given a game is in progress, When player submits a solution, Then it should be accepted by the server and all players notified
-  it.skip('should notify players when a solution has been submitted, given a game is in progress', (done) => {
+  it('should notify players when a solution has been submitted, given a game is in progress', (done) => {
+    let numberOfSuccesses = 0;
     
+    // pass when two clients receive the snoball-new-game event
+    let checkForSuccessCondition = function()
+    {
+      if (numberOfSuccesses == 2)
+      {
+        done();
+      }
+    }
+    
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer');
+    });
+
+    client1.on('snoball-player-joined', (name) => {      
+      client1.emit('snoball-game-request', {bigs: 2, smalls: 4});
+    });
+    
+    client1.on('snoball-new-game', (snoballGame) => {
+      client1.emit('snoball-game-solution', "10*10");
+    });
+    
+    client1.on('snoball-solution-received', (solution) => {
+      solution.playerName.should.equal('TestPlayer');
+      numberOfSuccesses++;
+      checkForSuccessCondition();
+    });
+    
+    client2.on('snoball-solution-received', (solution) => {
+      solution.playerName.should.equal('TestPlayer');
+      numberOfSuccesses++;
+      checkForSuccessCondition();
+    });
   });
   
   // Given a game is in progress, When player submits a solution and it is the last one, Then it should be accepted by the server and all players notified of game closure and result
-  it.skip('should return the result of the game when all players have submitted a solution', (done) => {
+  it('should return the result of the game when all players have submitted a solution', (done) => {
+    let numberOfSuccesses = 0;
     
+    // pass when two clients receive the snoball-new-game event
+    let checkForSuccessCondition = function()
+    {
+      if (numberOfSuccesses == 2)
+      {
+        done();
+      }
+    }
+    
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });
+    
+    client2.on('connect', function (data) {
+      client2.emit('snoball-join-game', 'TestPlayer2');
+    });
+
+    client1.on('snoball-player-joined', (name) => {  
+      if (name == 'TestPlayer1')
+      {    
+        client1.emit('snoball-game-request', {bigs: 2, smalls: 4});
+      }
+    });
+    
+    client1.on('snoball-new-game', (snoballGame) => {
+      client1.emit('snoball-game-solution', "10*10");
+    });
+    
+    client2.on('snoball-new-game', (snoballGame) => {
+      client2.emit('snoball-game-solution', "10*5");
+    });
+    
+    client1.on('snoball-game-complete', (results) => {    
+      results.solutions.should.be.an.Array;
+      results.winningPlayerName.should.be.a.String;  
+      numberOfSuccesses++;
+      checkForSuccessCondition();
+    });
+    
+    client2.on('snoball-game-complete', (results) => {
+      results.solutions.should.be.an.Array;
+      results.winningPlayerName.should.be.a.String;      
+      numberOfSuccesses++;
+      checkForSuccessCondition();
+    });
+    
+    client1.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
+  });
+  
+  // Given a game in progress, if a player leaves mid-game and they were the last one with a solution outstanding, complete game
+  it('should return the result of the game when a player leaves and they were the last one', (done) => {
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });
+    
+    client2.on('connect', function (data) {
+      client2.emit('snoball-join-game', 'TestPlayer2');
+    });
+
+    client1.on('snoball-player-joined', (name) => {  
+      if (name == 'TestPlayer1')
+      {    
+        client1.emit('snoball-game-request', {bigs: 2, smalls: 4});
+      }
+    });
+    
+    client1.on('snoball-new-game', (snoballGame) => {
+      client1.emit('snoball-game-solution', "10*10");
+    });        
+    
+    client1.on('snoball-solution-received', (solution) => {    
+      client2.disconnect();
+    });
+    
+    client1.on('snoball-game-complete', (results) => {
+      results.solutions.should.be.an.Array;
+      results.winningPlayerName.should.be.a.String;      
+      done();      
+    });
+    
+    client1.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
+    
+    client2.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
   });
   
   // Given a game is in progress, When player requests a new game, Then it should be ignored.
-  it.skip('should return an error and broadcast nothing when a player requests a game, given on is already in progress', (done) => {
+  it('should return an error and broadcast nothing when a player requests a game, given on is already in progress', (done) => {
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });
     
+    client2.on('connect', function (data) {
+      client2.emit('snoball-join-game', 'TestPlayer2');
+    });
+
+    client1.on('snoball-player-joined', (name) => {  
+      if (name == 'TestPlayer1')
+      {    
+        client1.emit('snoball-game-request', {bigs: 2, smalls: 4});
+      }
+    });
+    
+    client1.on('snoball-new-game',(snoballGame) => {
+      client2.emit('snoball-game-request', {bigs: 2, smalls: 4});
+    });        
+    
+    client1.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
+    
+    client2.on('snoball-error', (message) => {
+      if (message == 'Can\'t request a game while one is in progress, or you are not playing')
+      {
+        done();
+      }
+      else
+      {
+        throw Error(`This error should not have happened:${message}`);
+      }
+    });
   });
   
   // Given a game is in progress, When a guest requests to join, then it should be accepted and broadcast
-  it.skip('should allow a new player to join given a game is already in progress', (done) => {
+  it('should allow a new player to join given a game is already in progress', (done) => {
+    let numberOfSuccesses = 0;
     
+    // pass when two clients receive the player joined event from client 2
+    let checkForSuccessCondition = function()
+    {
+      if (numberOfSuccesses == 2)
+      {
+        done();
+      }
+    }
+    
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });        
+
+    client1.on('snoball-player-joined', (name) => {  
+      if (name == 'TestPlayer1')
+      {    
+        client1.emit('snoball-game-request', {bigs: 2, smalls: 4});
+      }
+      else if (name == 'TestPlayer2')
+      {
+        numberOfSuccesses++;
+        checkForSuccessCondition();
+      }
+    });
+    
+    client2.on('snoball-player-joined', (name) => {
+      if (name == 'TestPlayer2')
+      {
+        numberOfSuccesses++;
+        checkForSuccessCondition();
+      }
+    });
+    
+    client1.on('snoball-new-game',(snoballGame) => {      
+      client2.emit('snoball-join-game', 'TestPlayer2');
+    });
   });
   
   // Given a game is in progress, When a guest submits a solution or requests a game or chats, then it should be ignored.
-  it.skip('should return an error if a guest tries to submit a solution, request a game, or chat given a game is in progress', (done) => {
+  it('should return an error if a guest tries to submit a solution, request a game, or chat given a game is in progress', (done) => {
+    let cantChatErrorReceived = false;
+    let cantSubmitSolutionErrorReceived = false;
+    let cantRequestGameErrorReceived = false;    
     
+    // pass when all 3 errors received
+    let checkForSuccessCondition = function()
+    {
+      if (cantChatErrorReceived && cantSubmitSolutionErrorReceived && cantRequestGameErrorReceived)
+      {
+        done();
+      }
+    }
+    
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });        
+
+    client1.on('snoball-player-joined', (name) => {   
+      client1.emit('snoball-game-request', {bigs: 2, smalls: 4});            
+    });
+    
+    client1.on('snoball-new-game', (snoballGame) => {
+      client2.emit('snoball-chat','test chat message');
+      client2.emit('snoball-game-solution', "10*10");
+      client2.emit('snoball-game-request', {bigs:2, smalls:4});
+    });
+    
+    client1.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
+    
+    client2.on('snoball-error', (message) => {
+      if (message == 'Chat not allowed unless you have joined the game.')
+      {
+        cantChatErrorReceived = true;
+        checkForSuccessCondition();
+      }
+      else if (message == 'Can\'t submit a solution while a game is not in progress, or you are not playing')
+      {
+        cantSubmitSolutionErrorReceived = true;
+        checkForSuccessCondition();
+      }
+      else if (message == 'Can\'t request a game while one is in progress, or you are not playing')
+      {
+        cantRequestGameErrorReceived = true;
+        checkForSuccessCondition();
+      }
+      else
+      {
+        throw Error(`This error should not have happened:${message}`);
+      }
+    });
   });
   
   // Players should be able to chat regardless of game state
-  it.skip('should broadcast chat messages to all users, given a valid player', (done) => {
+  it('should broadcast chat messages to all users, given a valid player', (done) => {
+    // pass when chat received by both clients
+    let numberOfSuccesses = 0;
+    let playersJoined = 0;
+    let checkForSuccessCondition = function()
+    {
+      if (numberOfSuccesses == 2)
+      {
+        done();
+      }
+    }
     
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });
+    
+    client2.on('connect', function (data) {
+      client2.emit('snoball-join-game', 'TestPlayer2');
+    });
+    
+    client1.on('snoball-player-joined', (player) => {
+      playersJoined++;
+      if (playersJoined == 2)
+      {
+        client1.emit('snoball-chat', "test message");
+      }
+    });
+    
+    client1.on('snoball-chat', (message) => {
+      message.playerName.should.be.a.String;
+      message.message.should.be.a.String;
+      numberOfSuccesses++;
+      checkForSuccessCondition();
+    });
+    
+    client2.on('snoball-chat', (message) => {
+      message.playerName.should.be.a.String;
+      message.message.should.be.a.String;
+      numberOfSuccesses++;
+      checkForSuccessCondition();
+    });
   });
   
   //Given a game is in progress, when all players disconnect, then the server should clear the game and return to fresh state.
@@ -236,5 +518,31 @@ describe('Snoball Server @integ', () => {
         done();
       }
     })
+  });
+  
+  //Given a player is already joined, when a second player joins with the same name, then the player shall receive an error
+  it('should return an error if a player tries to join with a name already in use', (done) => {
+    client1.on('connect', function (data) {      
+      client1.emit('snoball-join-game', 'TestPlayer');
+    });
+    
+    client2.on('snoball-player-joined', (playerName) => {
+      client2.emit('snoball-join-game', 'TestPlayer');
+    });
+    
+    client2.on('snoball-error', (message) => {
+      if (message == "Player name taken, please choose another.")
+      {
+        done();        
+      }
+      else
+      {
+        throw Error(`This error should not have happened:${message}`);
+      }
+    });
+    
+    client1.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
   });
 });
