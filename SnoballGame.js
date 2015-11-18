@@ -102,10 +102,16 @@ class SnoballGame
 		return {isValid: true, reason: ''};
 	}
 	
-	// returns: 
+	// returns: [{isValid: true, solution: '10*10', explanation:'', score: 10}]
 	completeGame(playerSolutions)
 	{
+		let completedGameResults = [];
+		for (var playerSolution of playerSolutions)
+		{
+			completedGameResults.push({playerName: playerSolution.playerName, solution: this.calculateScore(playerSolution.solution)});
+		}
 		
+		return completedGameResults;
 	}
 }
 

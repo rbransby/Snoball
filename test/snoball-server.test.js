@@ -241,15 +241,13 @@ describe('Snoball Server @integ', () => {
     });
     
     client1.on('snoball-game-complete', (results) => {    
-      results.solutions.should.be.an.Array;
-      results.winningPlayerName.should.be.a.String;  
+      results.should.be.an.Array;      
       numberOfSuccesses++;
       checkForSuccessCondition();
     });
     
     client2.on('snoball-game-complete', (results) => {
-      results.solutions.should.be.an.Array;
-      results.winningPlayerName.should.be.a.String;      
+      results.should.be.an.Array;          
       numberOfSuccesses++;
       checkForSuccessCondition();
     });
@@ -285,8 +283,8 @@ describe('Snoball Server @integ', () => {
     });
     
     client1.on('snoball-game-complete', (results) => {
-      results.solutions.should.be.an.Array;
-      results.winningPlayerName.should.be.a.String;      
+      results.should.be.an.Array;
+      results[0].playerName.should.equal('TestPlayer1');            
       done();      
     });
     
@@ -544,5 +542,61 @@ describe('Snoball Server @integ', () => {
     client1.on('snoball-error', (message) => {
       throw Error(`This error should not have happened:${message}`);
     });
+  });
+  
+  //Given a player has submitted a solution, when they attempt to submit another solution, then they should get an error
+  it('should return an error if a player tries to submit more than 1 solution', (done) => 
+  {
+    // track how many times solution received count fires, it should only be 1
+    let solutionReceivedCount = 0;
+    client1.on('connect', function (data) {      
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });
+    
+    client2.on('connect', function (data) {      
+      client2.emit('snoball-join-game', 'TestPlayer2');
+    });
+    
+    client1.on('snoball-player-joined', (playerName) => {
+      if (playerName == 'TestPlayer1')
+      {
+        client1.emit('snoball-game-request', {bigs:2, smalls:4});
+      }
+    });
+    
+    client1.on('snoball-new-game', (snoballGame) => {
+      client1.emit('snoball-game-solution', '10*10');
+    });
+    
+    client1.on('snoball-solution-received', (solution) => {
+      solutionReceivedCount++;
+      if (solutionReceivedCount == 1)
+      {
+        client1.emit('snoball-game-solution', '20*20');  
+      }
+      else
+      {
+        throw Error("Second solution appears to have been accepted");
+      }
+      
+    });
+    
+    client1.on('snoball-error', (message) => {
+      if (message == "Solution already submitted and locked in.")
+      {
+        done();
+      }
+      else
+      {
+        throw Error(`This error should not have happened:${message}`);
+        done();
+      }
+    });
+    
+    client2.on('snoball-error', (message) => {
+      throw Error(`This error should not have happened:${message}`);
+    });
+    
+    
   });
 });

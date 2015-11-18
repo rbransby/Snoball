@@ -32,6 +32,9 @@ io.on('connection', function(socket){
         playerSolutions = [];
         players = [];
       }
+      else if (gameInProgress) {
+        checkIfGameComplete(io);
+      }
     }
     else
     {
@@ -87,20 +90,47 @@ io.on('connection', function(socket){
   socket.on('snoball-game-solution', function(solution) {
     if (gameInProgress && socket.playerName !== undefined)
     {
-        console.log(`Solution received: ${solution}`);
-        playerSolutions.push({playerName: socket.playerName, solution: solution});
-        io.emit('snoball-solution-received', {playerName: socket.playerName});
-        checkIfGameComplete();
+      try {
+        updatePlayerSolution(socket.playerName, solution);
+        console.log(`Solution received and accepted: ${solution}`);
+        io.emit('snoball-solution-received', {playerName: socket.playerName});        
+      }
+      catch (Error)
+      {
+        console.log(`Player already had a solution.`);
+        socket.emit('snoball-error', 'Solution already submitted and locked in.');
+      }        
+      checkIfGameComplete(io);
     }
     else
     {
-        socket.emit('snoball-error', 'Can\'t submit a solution while a game is not in progress, or you are not playing');
+      socket.emit('snoball-error', 'Can\'t submit a solution while a game is not in progress, or you are not playing');
     }
   });
   
-  function checkIfGameComplete() {
-    //payload: {solutions: [{playerName: 'playerName', solution: 'solution', score: 00}], 
-    // winningPlayerName: 'playerName}
+  function updatePlayerSolution(playerName, solution)
+  {
+    let playerSolutionIndex = playerSolutions.findIndex((element) => element.playerName == playerName);
+    if (playerSolutionIndex > -1)
+    {
+      throw Error("Player has a solution.");      
+    }
+    else 
+    {
+      playerSolutions.push({playerName: playerName, solution: solution});
+    } 
+  }
+  
+  function checkIfGameComplete(io) {
+    if (players.length == playerSolutions.length)
+    {
+      // we're all done, lets calculate the results
+      let results = snoballGame.completeGame(playerSolutions);
+      console.log(results);
+      io.emit('snoball-game-complete',results);
+      gameInProgress = false;
+      playerSolutions = [];
+    }
   };
   
   // reset server
