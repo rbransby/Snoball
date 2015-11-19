@@ -15,7 +15,7 @@ var players = [];
 app.use('/', express.static(__dirname));
 
 http.listen(3000, function(){
-  console.log('listening on *:3000');
+  logger.info('listening on *:3000');
 });
 
 // when a user connects, grab the socket and add the event listeners
@@ -26,16 +26,16 @@ io.on('connection', function(socket){
      snoballGame: snoballGame,
      players: players });
      
-  console.log('a user connected');
+  logger.info('a user connected');
   socket.on('disconnect', () => {    
     if (socket.playerName !== undefined)
     {
       players.splice(players.indexOf(socket.playerName),1);      
       socket.broadcast.emit('snoball-player-left', socket.playerName);
-      console.log(`${socket.playerName} disconnected`);  
+      logger.info(`${socket.playerName} disconnected`);  
       if (players.length == 0 && gameInProgress)
       {
-        console.log('all players left, resetting')
+        logger.info('all players left, resetting')
         gameInProgress = false;
         playerSolutions = [];
         players = [];
@@ -46,14 +46,14 @@ io.on('connection', function(socket){
     }
     else
     {
-      console.log('user disconnected');
+      logger.info('user disconnected');
     }
     
   });
   
   // when a chat message is received, check to see if the user has 'joined' and then re-publish to everyone
   socket.on('snoball-chat', (msg) => {
-    console.log(`chat message received: ${msg}`);
+    logger.info(`chat message received: ${msg}`);
     if (socket.playerName !== undefined)
     {
       io.emit('snoball-chat', {playerName: socket.playerName, message: msg});
@@ -83,7 +83,7 @@ io.on('connection', function(socket){
   socket.on('snoball-game-request',function(request) {
       if (!gameInProgress && socket.playerName !== undefined)
       {
-          console.log('snoball game requested');
+          logger.info('snoball game requested');
           snoballGame = new SnoballGame(request.bigs, request.smalls);
           gameInProgress = true;      
           io.emit('snoball-new-game', snoballGame);
@@ -100,12 +100,12 @@ io.on('connection', function(socket){
     {
       try {
         updatePlayerSolution(socket.playerName, solution);
-        console.log(`Solution received and accepted: ${solution}`);
+        logger.info(`Solution received and accepted: ${solution}`);
         io.emit('snoball-solution-received', {playerName: socket.playerName});        
       }
       catch (Error)
       {
-        console.log(`Player already had a solution.`);
+        logger.info(`Player already had a solution.`);
         socket.emit('snoball-error', 'Solution already submitted and locked in.');
       }        
       checkIfGameComplete(io);
@@ -134,7 +134,7 @@ io.on('connection', function(socket){
     {
       // we're all done, lets calculate the results
       let results = snoballGame.completeGame(playerSolutions);
-      console.log(results);
+      logger.info(results);
       io.emit('snoball-game-complete',results);
       gameInProgress = false;
       playerSolutions = [];
