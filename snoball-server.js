@@ -4,8 +4,9 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var SnoballGame = require('./SnoballGame');
+var logger = require('winston');
 
-var snoballGame;
+var snoballGame = {};
 var gameInProgress = false;
 
 var playerSolutions = [];
@@ -19,11 +20,18 @@ http.listen(3000, function(){
 
 // when a user connects, grab the socket and add the event listeners
 io.on('connection', function(socket){
+  
+  socket.emit('snoball-connected', 
+    {gameInProgress: gameInProgress,
+     snoballGame: snoballGame,
+     players: players });
+     
   console.log('a user connected');
   socket.on('disconnect', () => {    
     if (socket.playerName !== undefined)
     {
       players.splice(players.indexOf(socket.playerName),1);      
+      socket.broadcast.emit('snoball-player-left', socket.playerName);
       console.log(`${socket.playerName} disconnected`);  
       if (players.length == 0 && gameInProgress)
       {

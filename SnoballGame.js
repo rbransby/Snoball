@@ -1,5 +1,6 @@
 "use strict";
 var math = require("mathjs");
+var logger = require('winston');
 
 class SnoballGame
 {
@@ -62,7 +63,7 @@ class SnoballGame
 		var numbersUsed = solution.match( numberPattern );
 		if (numbersUsed == null || numbersUsed.length == 0 || numbersUsed.length > 6)
 		{
-			//console.log(`not enough numbers or too many numbers: ${numbersUsed}`);
+			//logger.info(`not enough numbers or too many numbers: ${numbersUsed}`);
 			return {isValid: false, reason: 'No numbers or too many numbers in solution'};
 		}
 		
@@ -79,7 +80,7 @@ class SnoballGame
 			}
 			else
 			{
-				//console.log(`invalid number found ${numberUsed}`)
+				//logger.info(`invalid number found ${numberUsed}`)
 				isValidNumbers = false;
 				return;
 			}
@@ -87,7 +88,7 @@ class SnoballGame
 		
 		if (!isValidNumbers)
 		{
-			//console.log("isValidNumbers == false");
+			//logger.info("isValidNumbers == false");
 			return {isValid: false, reason: 'Invalid number used in solution'};
 		}
 		
@@ -95,7 +96,7 @@ class SnoballGame
 			math.eval(solution)
 		}
 		catch (exception) {
-			console.log(exception.message);
+			logger.info(exception.message);
 			return {isValid: false, reason: 'Invalid mathematical syntax was used'};
 		}
 		

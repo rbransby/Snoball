@@ -2,18 +2,30 @@
 <!doctype html>
 <html lang="">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="import" href="elements.html">
 <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body unresolved class="fullbleed layout vertical">
-	
-	
-	<template is="dom-bind" id="webapp">
-		<snoball-event-collection id="snoballEventCollection" items="{{snoballEvents}}"></snoball-event-collection>
-		<snoball-input-field id="snoballInput"></snoball-input-field>
-	</template>
+	<style>
+		#gameEventContent {
+			padding: 50px 50px;
+			width: 900px;
+		}
+		#content {
+			width:100%;
+		}
+	</style>
+	<div id="content" class="layout vertical">
+		<div id="gameEventContent" class="self-center">
+			<template is="dom-bind" id="webapp">			
+				<snoball-event-collection id="snoballEventCollection" items="{{snoballEvents}}"></snoball-event-collection>
+				<snoball-input-field id="snoballInput"></snoball-input-field>			
+			</template>
+		</div>
+	</div>
 	
 	<script src="webapp.js"></script>
 	

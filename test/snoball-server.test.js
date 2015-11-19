@@ -596,7 +596,69 @@ describe('Snoball Server @integ', () => {
     client2.on('snoball-error', (message) => {
       throw Error(`This error should not have happened:${message}`);
     });
+  });
+  
+  // Given a player has joined, when a player leaves, all users should be notified
+  it('should notify all users when a player leaves', (done) => {
+    let numberOfSuccesses = 0;
+    let checkForSuccessCondition = function()
+    {
+      if (numberOfSuccesses == 2)
+      {
+        done();
+      }
+    }
+    
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });        
+    
+    client1.on('snoball-player-joined', (player) => {      
+      client1.disconnect();
+    });
+        
+    
+    client2.on('snoball-player-left', (player) => {
+      player.should.equal('TestPlayer1');
+      done();
+    });
+  });
+  
+  // Given a server is active, when a user connects, they should receive the current status of the server
+  it('should pass to users the current state of the server on connection', (done) => {
+    
+    var client3;
+    
+    client1.on('snoball-connected', (serverStatus) => {
+      serverStatus.gameInProgress.should.be.a.Boolean;
+      serverStatus.gameInProgress.should.equal(false);
+      serverStatus.snoballGame.should.be.an.Object;
+      serverStatus.players.should.be.an.Array;
+      client1.emit('snoball-join-game', 'TestPlayer1');            
+    });
+    
+    client1.on('snoball-player-joined', (playerName) => {
+      client1.emit('snoball-game-request', {bigs:2, smalls:4});      
+    });
+    
+    client1.on('snoball-new-game', (snoballGame) => {
+      client3 = io.connect(socketURL, options);
+      client3.on('snoball-connected', (serverStatus) => {
+        serverStatus.gameInProgress.should.be.a.Boolean;
+        serverStatus.gameInProgress.should.equal(true);
+        serverStatus.snoballGame.Bigs.should.equal(2);
+        serverStatus.snoballGame.Smalls.should.equal(4);
+        serverStatus.players.should.be.an.Array;
+        serverStatus.players[0].should.equal('TestPlayer1');
+        done();
+      });
+    });
+    
+    
     
     
   });
+  
+  
+  
 });

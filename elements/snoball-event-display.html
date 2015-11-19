@@ -3,12 +3,27 @@
 <dom-module id="snoball-event-display">
   <template>
     <style>
-      /* TODO: add CSS */
+      .host {
+        display:block;
+      }
+      .avatar {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        border-radius: 5%;
+        overflow: hidden;
+        background: lightskyblue;
+        padding-right:10px;
+      }
+      
+      .eventText {
+        padding-left:10px;
+      }
     </style>
 
     <paper-icon-item>
-      <div class="avatar raceIcon" item-icon>{{item.RaceNumber}}</div>
-      <paper-item-body two-line>
+      <div class="avatar" item-icon>{{item.RaceNumber}}</div>
+      <paper-item-body class="eventText" two-line>
         <div>
           {{item.eventType}}
         </div>

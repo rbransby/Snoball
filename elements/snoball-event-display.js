@@ -23,20 +23,26 @@ class SnoballEventDisplay {
       if (item.eventType == 'snoball-chat') {
         return item.payload;
       }
-      else if (item.eventType == 'snoball-new-game') {
-		      // payload: the snoballgame object
+      else if (item.eventType == 'snoball-new-game') {		      
         return `Numbers: ${item.payload.Numbers} Target: ${item.payload.Target}`;
       }
-      else if (item.eventType == 'snoball-player-joined') {
-        //payload: 'playername'
+      else if (item.eventType == 'snoball-player-joined') {        
         return item.payload;
       }
-      else if (item.eventType == 'snoball-solution-received') {
-        //payload: {playerName: 'playerName'}
+      else if (item.eventType == 'snoball-solution-received') {        
         return item.payload;
       }
       else if (item.eventType == 'snoball-game-complete') {
-        //[{playerName: 'playerName', solution: {isValid: true, solution: '10*10', explanation:'', score: 10}}]
+        return item.payload;
+      }
+      else if (item.eventType == 'snoball-error') {
+        return item.payload;
+      }
+      else if (item.eventType == 'snoball-connected') {
+        return item.payload;
+      }
+      else if (item.eventType == 'snoball-player-left') {
+        return item.payload;
       }
     }
   }

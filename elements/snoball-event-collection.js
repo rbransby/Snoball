@@ -17,4 +17,7 @@
       detached() {}
       attributeChanged() {}
       
+      addEvent(event) {
+        this.push('items', event);
+      }
     }
