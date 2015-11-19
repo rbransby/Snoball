@@ -39,6 +39,7 @@
                   event = {eventType: 'snoball-chat', payload: input};
               }                        
               this.fire('snoball-command-received', event);
+              this.inputText = '';
           }
       }
     }
