@@ -9,8 +9,9 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body unresolved class="fullbleed layout vertical">
+	<link rel="import" href="bower_components/polymer/polymer.html">
 	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-	<style>
+	<style is="custom-style">
 		#gameEventContent {
 			padding: 50px 50px;
 			width: 900px;
@@ -27,21 +28,25 @@
 		#snoballInput
 		{
 			position: fixed;
-			bottom: 0;	
 			width:inherit;	
 			height:10vh;	
 		}
 		
-		.title {
-			margin-left: auto;
-			margin-right: auto;
+		app-header {
+			border-bottom: 1px solid #ddd;
+			background-color: #fff;
+			color: #444;
+			height:50px;
 		}
+		.main-title-toolbar {
+			@apply(--layout-center-center);
+		}		
 		
 		
 	</style>
-	<app-header fixed waterfall>
-      <app-toolbar class="toolbar">
-        <div title>SNOBALL</div>
+	<app-header fixed>
+      <app-toolbar class="main-title-toolbar">
+        <div class="title">SNOBALL</div>
       </app-toolbar>
     </app-drawer>
 	<div id="content" class="layout vertical">
