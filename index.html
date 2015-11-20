@@ -9,6 +9,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body unresolved class="fullbleed layout vertical">
+	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 	<style>
 		#gameEventContent {
 			padding: 50px 50px;
@@ -30,7 +31,19 @@
 			width:inherit;	
 			height:10vh;	
 		}
+		
+		.title {
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		
 	</style>
+	<app-header fixed waterfall>
+      <app-toolbar class="toolbar">
+        <div title>SNOBALL</div>
+      </app-toolbar>
+    </app-drawer>
 	<div id="content" class="layout vertical">
 		<div id="gameEventContent" class="self-center">
 			<template is="dom-bind" id="webapp">			
