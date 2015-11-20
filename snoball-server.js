@@ -85,6 +85,7 @@ io.on('connection', function(socket){
       {
           logger.info('snoball game requested');
           snoballGame = new SnoballGame(request.bigs, request.smalls);
+          snoballGame.StartedByPlayer = socket.playerName;
           gameInProgress = true;      
           io.emit('snoball-new-game', snoballGame);
       }

@@ -120,6 +120,8 @@ describe('Snoball Server @integ', () => {
       snoballGame.Smalls.should.equal(4);
       snoballGame.Numbers.should.be.an.Array;
       snoballGame.Target.should.be.a.Number;
+      snoballGame.StartedByPlayer.should.be.a.String;
+      snoballGame.StartedByPlayer.should.equal('TestPlayer');
       numberOfSuccesses++;
       checkForSuccessCondition();
     });
@@ -129,6 +131,8 @@ describe('Snoball Server @integ', () => {
       snoballGame.Smalls.should.equal(4);
       snoballGame.Numbers.should.be.an.Array;
       snoballGame.Target.should.be.a.Number;
+      snoballGame.StartedByPlayer.should.be.a.String;
+      snoballGame.StartedByPlayer.should.equal('TestPlayer');
       numberOfSuccesses++;
       checkForSuccessCondition();
     });

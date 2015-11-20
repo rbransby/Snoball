@@ -25,7 +25,7 @@
       <div class="avatar" item-icon>{{item.RaceNumber}}</div>
       <paper-item-body class="eventText" two-line>
         <div>
-          {{item.eventType}}
+          {{calculatePrimaryDisplay(item)}}
         </div>
         <div secondary>
           {{calculateSecondaryDisplay(item)}}
