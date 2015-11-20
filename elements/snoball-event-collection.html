@@ -3,15 +3,13 @@
 <dom-module id="snoball-event-collection">
   <template>
     <style>
-      snoball-event-display {
-        height: 80px;
-        width: 100%;
-        display: inline-block;
-      }
+      
     </style>
+    <div id="displayArea">
     <template is="dom-repeat" items="{{items}}">
       <snoball-event-display item="{{item}}"></snoball-event-display>
     </template>
+    </div>
   </template>
   <script src="snoball-event-collection.js"></script>
   <script>

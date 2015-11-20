@@ -11,13 +11,22 @@
       }
       created() {}
       ready() {
-        //this.items = this.populateWithTestData();        
+        this.$.displayArea.addEventListener('dom-change', this.onItemAdded);     
       }
       attached() {}
       detached() {}
       attributeChanged() {}
       
       addEvent(event) {
-        this.push('items', event);
+        this.push('items', event);                
       }
+      
+      onItemAdded() {
+        let lastChild = this.querySelector('snoball-event-display:last-of-type');
+        if (lastChild != undefined)
+        {
+            lastChild.scrollIntoView();        
+        }
+      };
+            
     }
