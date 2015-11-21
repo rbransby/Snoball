@@ -12,24 +12,25 @@
 	<link rel="import" href="bower_components/polymer/polymer.html">
 	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 	<style is="custom-style">
-		#gameEventContent {
-			padding: 50px 50px;
+		#gameEventContent {			
 			width: 900px;
+			height:100%;
+			display:flex;
+			flex-direction: column;
 		}
 		#content {
 			width:100%;
+			height:85vh;
 		}
 		#snoballEventCollection
-		{
-			height:85vh;
+		{			
 			overflow-y:auto;
-			display:block;
+			flex:10;
 		}
 		#snoballInput
-		{
-			position: fixed;
+		{			
 			width:inherit;	
-			height:10vh;	
+			flex:2	
 		}
 		
 		app-header {
@@ -48,7 +49,7 @@
       <app-toolbar class="main-title-toolbar">
         <div class="title">SNOBALL</div>
       </app-toolbar>
-    </app-drawer>
+    </app-header>
 	<div id="content" class="layout vertical">
 		<div id="gameEventContent" class="self-center">
 			<template is="dom-bind" id="webapp">			

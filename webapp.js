@@ -23,10 +23,12 @@
     });
   }
   
-  app.addEventListener('dom-change', function() {	     
-    document.querySelector('#snoballInput').addEventListener('snoball-command-received', (eventArgs) => {
+  document.querySelector('#snoballInput').addEventListener('snoball-command-received', (eventArgs) => {
       console.log(`snoball event raised type:${eventArgs.detail.eventType} payload:${eventArgs.detail.payload}`);      
       socket.emit(eventArgs.detail.eventType, eventArgs.detail.payload);
     });
+  
+  app.addEventListener('dom-change', function() {	     
+    
   });
 })(document);
