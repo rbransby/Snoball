@@ -10,9 +10,7 @@
         display: inline-block;
         width: 60px;
         height: 60px;
-        border-radius: 5%;
-        overflow: hidden;
-        background: lightskyblue;
+        border-radius: 5%;                
         padding-right:10px;
       }
       
@@ -22,7 +20,7 @@
     </style>
 
     <paper-icon-item>
-      <div class="avatar" item-icon>{{item.RaceNumber}}</div>
+      <div class="avatar" item-icon><iron-image style="width:60px; height:60px;" sizing="contain" src="/images/snoball-connected.jpg"></iron-image></div>
       <paper-item-body class="eventText" two-line>
         <div>
           {{calculatePrimaryDisplay(item)}}
