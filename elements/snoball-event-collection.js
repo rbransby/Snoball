@@ -6,8 +6,13 @@
           items: {
             type: Array,
             value: []
+          },
+          eventImages: {
+              type:Object,
+              value:{},
+              notify:true
           }
-        };
+        }
       }
       created() {}
       ready() {

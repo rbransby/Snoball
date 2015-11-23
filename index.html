@@ -2,14 +2,15 @@
 <!doctype html>
 <html lang="">
 <head>
+<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="import" href="elements.html">
-<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+<link rel="import" href="bower_components/polymer/polymer.html">
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
-<body unresolved class="fullbleed layout vertical">
-	<link rel="import" href="bower_components/polymer/polymer.html">
+<body unresolved class="fullbleed layout vertical">	
 	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 	<style is="custom-style">
 		#gameEventContent {			
@@ -45,6 +46,7 @@
 		
 		
 	</style>
+	
 	<app-header condenses>
       <app-toolbar class="main-title-toolbar">
         <div class="title">SNOBALL</div>
@@ -54,13 +56,14 @@
 	<div id="content" class="layout vertical">
 		<div id="gameEventContent" class="self-center">
 			<template is="dom-bind" id="webapp">			
-				<snoball-event-collection id="snoballEventCollection" items="{{snoballEvents}}"></snoball-event-collection>
+				<snoball-event-collection event-images="{{snoballEventImages}}" id="snoballEventCollection" items="{{snoballEvents}}"></snoball-event-collection>
 				<snoball-input-field id="snoballInput"></snoball-input-field>			
 			</template>
+			<script src="webapp.js"></script>
 		</div>
 	</div>
 	
-	<script src="webapp.js"></script>
+	
 	
 </body>
 </html>

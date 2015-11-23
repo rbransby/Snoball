@@ -6,8 +6,17 @@ class SnoballEventDisplay {
       item: {
         type: Object,
         value: {}
+      },
+
+      eventImages: {
+          type:Object,
+          value:{}
+      },
+      eventImage: {
+        type: String,
+        computed: '_calculateImage(item.eventType, eventImages)'
       }
-    };
+    }
   }
   created() { }
   ready() {
@@ -16,6 +25,37 @@ class SnoballEventDisplay {
   attached() { }
   detached() { }
   attributeChanged() { }
+  
+  _calculateImage(eventType, eventImages)
+  {
+    if (eventType != null)
+    {
+      if (eventType == 'snoball-chat') {
+        return eventImages.snoballChat;
+      }
+      else if (eventType == 'snoball-new-game') {	
+        return eventImages.snoballNewGame;
+      }
+      else if (eventType == 'snoball-player-joined') {        
+        return eventImages.snoballPlayerJoined;
+      }
+      else if (eventType == 'snoball-solution-received') {        
+        return eventImages.snoballSolutionReceived;
+      }
+      else if (eventType == 'snoball-game-complete') {
+        return eventImages.snoballGameComplete;
+      }
+      else if (eventType == 'snoball-error') {
+        return eventImages.snoballError;
+      }
+      else if (eventType == 'snoball-connected') {
+        return eventImages.snoballConnected; 
+      }
+      else if (eventType == 'snoball-player-left') {
+        return eventImages.snoballPlayerLeft;
+      }
+    }
+  }
   
   calculatePrimaryDisplay(item)
   {
