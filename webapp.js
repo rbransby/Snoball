@@ -37,13 +37,13 @@
   
   var snoballEventImages = {
     snoballChat: '',
-    snoballPlayerJoined: '',
-    snoballNewGame: '/images/snoball-new-game.jpg',
-    snoballSolutionReceived: '',
-    snoballConnected: '/images/snoball-connected.jpg',
-    snoballPlayerleft:'',
-    snoballError: '/images/snoball-error.jpg',
-    snoballGamecomplete:'/images/snoball-game-complete.jpg'
+    snoballPlayerJoined: '/images/snoball-player-joined.png',
+    snoballNewGame: '/images/snoball-new-game.png',
+    snoballSolutionReceived: '/images/snoball-solution-received.png',
+    snoballConnected: '/images/snoball-connected.png',
+    snoballPlayerleft:'/images/snoball-player-left.png',
+    snoballError: '/images/snoball-error.png',
+    snoballGamecomplete:'/images/snoball-game-complete.png'
   };
 
   
