@@ -1,0 +1,14 @@
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SnoballConsoleClient.exe.config
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SnoballConsoleClient.exe
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SnoballConsoleClient.pdb
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\EngineIoClientDotNet.dll
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\Newtonsoft.Json.dll
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SocketIoClientDotNet.dll
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\WebSocket4Net.dll
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\Newtonsoft.Json.xml
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.csprojResolveAssemblyReference.cache
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.exe
+d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.pdb
+D:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SnoballConsoleClient.exe.config
+D:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.exe
+D:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.pdb

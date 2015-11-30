@@ -75,6 +75,7 @@ io.on('connection', function(socket){
     {
       socket.playerName = playerName;
       players.push(playerName);
+      logger.info(`player joined: ${playerName}`);
       io.emit('snoball-player-joined', playerName);  
     }    
   });
