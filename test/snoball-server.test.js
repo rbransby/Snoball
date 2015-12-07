@@ -380,6 +380,39 @@ describe('Snoball Server @integ', () => {
     });
   });
   
+  // If a player has joined, they should not be allowed to join again
+  it('should not allow a player to join if they have already joined', (done) => {
+    let hasJoined = false;
+    
+    client1.on('connect', function (data) {
+      client1.emit('snoball-join-game', 'TestPlayer1');
+    });            
+    
+    client2.on('snoball-player-joined', (name) => {
+      if (name == 'TestPlayer1')
+      {
+        if (hasJoined == true)
+        {
+          throw Error("should not have allowed the player to join twice");
+        }
+        else
+        {
+          hasJoined = true;
+          client1.emit('snoball-join-game', "TestPlayerX");
+        }
+      }
+      
+    });
+    
+    client1.on('snoball-error', (message) => {
+      if (message == "You have already joined the game.")
+      {
+        done();
+      }
+    });
+        
+  });
+  
   // Given a game is in progress, When a guest submits a solution or requests a game or chats, then it should be ignored.
   it('should return an error if a guest tries to submit a solution, request a game, or chat given a game is in progress', (done) => {
     let cantChatErrorReceived = false;

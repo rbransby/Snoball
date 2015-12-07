@@ -12,3 +12,6 @@ d:\users\rob\documents\visual studio 2015\Projects\SnoballConsoleClient\SnoballC
 D:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SnoballConsoleClient.exe.config
 D:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.exe
 D:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.pdb
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Debug\SnoballConsoleClient.exe.config
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.exe
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Debug\SnoballConsoleClient.pdb
