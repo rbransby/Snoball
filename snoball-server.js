@@ -71,6 +71,11 @@ io.on('connection', function(socket){
     {
       socket.emit('snoball-error', "Player name taken, please choose another.");
     }
+    // ensure this isn't already an active player
+    else if (socket.playerName !== undefined)
+    {
+      socket.emit('snoball-error', "You have already joined the game.");
+    }
     else
     {
       socket.playerName = playerName;

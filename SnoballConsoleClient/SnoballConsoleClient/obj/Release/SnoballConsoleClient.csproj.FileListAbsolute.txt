@@ -1,0 +1,11 @@
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\SnoballConsoleClient.exe.config
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\SnoballConsoleClient.exe
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\SnoballConsoleClient.pdb
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\EngineIoClientDotNet.dll
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\Newtonsoft.Json.dll
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\SocketIoClientDotNet.dll
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\WebSocket4Net.dll
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\bin\Release\Newtonsoft.Json.xml
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Release\SnoballConsoleClient.csprojResolveAssemblyReference.cache
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Release\SnoballConsoleClient.exe
+C:\Dev\Snoball\SnoballConsoleClient\SnoballConsoleClient\obj\Release\SnoballConsoleClient.pdb
