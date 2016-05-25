@@ -20,11 +20,11 @@ as I used this little project as a basis to learn both technologies.
 
 # Installation
 
-To in install, clone the repo and then:
+To install, clone the repo and then:
 
 `npm install` to pull down the node package dependencies
 `bower install` to pull down the bower dependencies (mostly the web component stuff)
-`node app.js` will get the server running and spin up the socket.io instance, as well as express to serve up the web client.
+`node snoball-server.js` will get the server running and spin up the socket.io instance, as well as express to serve up the web client.
 
 # Testing
 
